@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+    <!--Puerto de Arribo-->
+
+      <record id="purchase_order_arrivalport_01" model="purchase.order.arrivalport">
+          <field name="name">San Antonio</field>
+      </record>
+
+      <record id="purchase_order_arrivalport_02" model="purchase.order.arrivalport">
+          <field name="name">Valparaiso</field>
+      </record>
+
+      <record id="purchase_order_arrivalport_03" model="purchase.order.arrivalport">
+          <field name="name">Coronel</field>
+      </record>
+
+    <!--Bodega Planificada-->
+
+      <record id="purchase_order_plannedwh_01" model="purchase.order.plannedwh">
+          <field name="name">San Carlos</field>
+      </record>
+
+      <record id="purchase_order_plannedwh_02" model="purchase.order.plannedwh">
+          <field name="name">Santiago</field>
+      </record>
+
+      <record id="purchase_order_plannedwh_03" model="purchase.order.plannedwh">
+          <field name="name">Rengo</field>
+      </record>
+
+      <record id="purchase_order_plannedwh_04" model="purchase.order.plannedwh">
+          <field name="name">ICOFRUT</field>
+      </record>
+
+
+    <!--Bodega-->
+
+      <record id="purchase_order_warehouse_01" model="purchase.order.warehouse">
+          <field name="name">San Carlos</field>
+      </record>
+
+      <record id="purchase_order_warehouse_02" model="purchase.order.warehouse">
+          <field name="name">Santiago</field>
+      </record>
+
+      <record id="purchase_order_warehouse_03" model="purchase.order.warehouse">
+          <field name="name">Rengo</field>
+      </record>
+
+      <record id="purchase_order_warehouse_04" model="purchase.order.warehouse">
+          <field name="name">ICOFRUT</field>
+      </record>
+
+    </data>
+</odoo>
