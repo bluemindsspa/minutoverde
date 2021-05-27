@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_custom_purchase_stages_purchasemanager,access_custom_purchase_stages_sm,purchase_order_stages_odoo.model_custom_purchase_order_stage,purchase.group_purchase_manager,1,1,1,1
+access_custom_purchase_stages_baseuser,access_custom_purchase_stages_su,purchase_order_stages_odoo.model_custom_purchase_order_stage,base.group_user,1,0,0,0
