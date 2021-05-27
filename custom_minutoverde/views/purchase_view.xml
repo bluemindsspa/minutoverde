@@ -6,7 +6,26 @@
             <field name="model">purchase.order</field>
             <field name="inherit_id" ref="purchase.purchase_order_form"/>
             <field name="arch" type="xml">
+                <field name="partner_id" position="before">
+                    <field name="oc_sap"/>
+                    <field name="imports"/>
+                </field>
                 <xpath expr="//notebook" position="inside">
+                    <page name="import" string="Importación" attrs="{'invisible': [('imports', '=', False)]}">
+                        <group>
+                            <group>
+                                <field name="awb_bl"/>
+                                <field name="cont_nbr"/>
+                                <field name="cia_id"/>
+                                <field name="mn_id"/>
+                            </group>
+                            <group>
+                                <field name="arrival_port_id"/>
+                                <field name="planned_wh_id"/>
+                                <field name="warehouse_id"/>
+                            </group>
+                        </group>
+                    </page>
                     <page name="checklist" string="Checklist">
                         <field name="checklist_line" widget="section_and_note_one2many" mode="tree,kanban">
                             <tree string="checklist_line" editable="bottom">
