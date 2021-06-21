@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="procurement_plan_tree_view" model="ir.ui.view">
+        <field name="name">procurement.plan.tree</field>
+        <field name="model">procurement.plan</field>
+        <field name="arch" type="xml">
+            <tree string="Procurement Plan">
+                <field name="name"/>
+                <field name="create_date"/>
+                <field name="stock_route_id" invisible="1"/>
+                <field name="buy_route_id" invisible="1"/>
+                <field name="manufacture_route_id" invisible="1"/>
+                <field name="sale_order_ids" optional="show"/>
+                <field name="mrp_production_ids" widget="many2many_tags" optional="hide"/>
+                <field name="purchase_requisition_ids" widget="many2many_tags" optional="show"/>
+                <field name="purchase_order_ids" widget="many2many_tags" optional="hide"/>
+                <field name="state"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="procurement_plan_form_view" model="ir.ui.view">
+        <field name="name">procurement.plan.form</field>
+        <field name="model">procurement.plan</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_approved" type="object" states='draft' string="Apply to Plan" class="btn-primary"/>
+                    <button name="action_running" type="object" states='approved' string="Run Plan" class="btn-warnning"
+                            groups="app_procurement_plan.group_proc_plan_manager"/>
+                    <button name="action_done" type="object" states='running' string="Set Done" class="btn-primary"
+                            groups="app_procurement_plan.group_proc_plan_manager"/>
+                    <button name="action_cancel" type="object" states='draft,approved' string="Cancel"/>
+                    <button name="action_draft" type="object" states="cancel" string="Reset to Draft"/>
+                    <!--以上为各种状态处理-->
+                    <field name="state" widget="statusbar" statusbar_visible="draft,approved,running,done"/>
+                </header>
+                <sheet>
+                    <!--显示明细的操作-->
+                    <div class="oe_button_box" name="button_box">
+                        <button type="action" name="%(app_procurement_plan.action_sale_order_procurement)d" class="oe_stat_button" icon="fa-signal">
+                            <field name="sale_order_count" widget="statinfo" string="Sale Orders"/>
+                        </button>
+                        <button type="object" name="action_view_mo" class="oe_stat_button" icon="fa-wrench"
+                                attrs="{'invisible': [('mrp_production_count', '=', 0)]}"
+                                groups="mrp.group_mrp_user">
+                            <field name="mrp_production_count" widget="statinfo" string="Manufacture"/>
+                        </button>
+                        <button type="object" name="action_view_pr" class="oe_stat_button" icon="fa-credit-card"
+                                attrs="{'invisible': [('purchase_requisition_count', '=', 0)]}"
+                                groups="purchase.group_purchase_user">
+                            <field name="purchase_requisition_count" widget="statinfo" string="Purchase Agreement"/>
+                        </button>
+                        <button type="object" name="action_view_po" class="oe_stat_button" icon="fa-shopping-cart"
+                                attrs="{'invisible': [('purchase_order_count', '=', 0)]}"
+                                groups="purchase.group_purchase_user">
+                            <field name="purchase_order_count" widget="statinfo" string="Purchase"/>
+                        </button>
+                        <button type="action" name="%(app_procurement_plan.action_sale_order_line_procurement)d" class="oe_stat_button" icon="fa-list-ol">
+                            <field name="procurement_count" widget="statinfo" string="Orders SKU Detail"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" string="Procurement Name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="purchase_type_id"/>
+                            <field name="note"/>
+                        </group>
+                        <group>
+                            <field name="create_uid" readonly="1"/>
+                            <field name="create_date" widget="date" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="qty_plan_total"/>
+                            <field name="qty_remain_total"/>
+                            <field name="qty_manufacture_total"/>
+                            <field name="qty_buy_total"/>
+                            <field name="qty_stock_total"/>
+                        </group>
+                        <group groups="base.group_no_one">
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="stock_route_id"/>
+                            <field name="buy_route_id"/>
+                            <field name="manufacture_route_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Procurement Order Line Detail" attrs="{'invisible': [('state', '=', 'draft')]}">
+                            <field name="procurement_ids" mode="tree"
+                                   context="{'tree_view_ref': 'app_procurement_plan.sale_order_line_tree_view_procurement'}"/>
+                        </page>
+                        <page string="Sale Orders To Plan">
+                            <field name="sale_order_ids" widget="many2many" nolabel="1" mode="tree"
+                                   domain="[('state', '=', 'sale'),
+                                   ('sale_procurement_step', '=', 'two_steps'),
+                                   ('proc_plan_id', '=', False)]"
+                                   options="{'no_create_edit':True, 'not_delete': True}">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="date_order"/>
+                                    <field name="partner_id"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="procurement_plan_search_view" model="ir.ui.view">
+        <field name="name">procurement.plan.search</field>
+        <field name="model">procurement.plan</field>
+        <field name="arch" type="xml">
+            <search string="Procurement Plan">
+                <field name="name"/>
+                <field name="note"/>
+                <group expand="0" string="Group By">
+                    <filter string="状态" name='groupby_state' context="{'group_by':'state'}"/>
+                </group>
+                <searchpanel>
+                    <field name="create_date"/>
+                    <field name="state"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_procurement_plan">
+        <field name="name">Sale Procurement Plan</field>
+        <field name="res_model">procurement.plan</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_procurement_plan" action="action_procurement_plan"
+              sequence="6"
+              parent="sale.sale_order_menu"/>
+</odoo>

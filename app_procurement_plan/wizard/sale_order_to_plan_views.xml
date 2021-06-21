@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- add picking to batch  -->
+    <record id="sale_order_to_plan_form" model="ir.ui.view">
+        <field name="name">sale.order.to.plan.form</field>
+        <field name="model">sale.order.to.plan</field>
+        <field name="arch" type="xml">
+            <form string="Add Sale Order to Procurement Plan">
+                <separator string="Sale Order to Process(Only for Confirm and not Plan)"/>
+                <group>
+                    <field name="so_ids" nolabel="1" widget="many2many_tags"/>
+                </group>
+                <separator string="Select a Plan"/>
+                <group>
+                    <field name="create_new"/>
+                    <field name="plan_id" options="{'no_create_edit': True, 'no_open': True}"
+                           attrs="{'invisible': [('create_new', '=', True)]}"/>
+                </group>
+                <footer>
+                    <button name="attach_plan" type="object" string="Confirm" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--  action: add so to plan -->
+    <record id="action_sale_order_to_plan" model="ir.actions.act_window">
+        <field name="name">Add Sale Order to Procurement Plan</field>
+        <field name="res_model">sale.order.to.plan</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="sale_order_to_plan_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <!--在so中显示操作-->
+    <act_window id="sale_order_action_sale_order_to_plan"
+        name="Add to Procurement Plan"
+        res_model="sale.order.to.plan"
+        binding_model="sale.order"
+        binding_views="list,form"
+        view_mode="form" target="new"/>
+
+</odoo>
