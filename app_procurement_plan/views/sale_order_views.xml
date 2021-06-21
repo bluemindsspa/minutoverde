@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="app_view_order_form" model="ir.ui.view">
+            <field name="name">app.sale.order.form</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_draft']" position="after">
+                    <button name="action_sale_to_plan" type="object" string="Add to Plan" class="btn-primary"
+                            attrs="{'invisible': [
+                            '|', ('sale_procurement_step', '!=', 'two_steps'),
+                            '|', ('proc_plan_id', '!=', False),
+                            ('state', '!=', 'sale')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='picking_policy']" position="before">
+                    <field name="sale_procurement_step"/>
+                    <field name="proc_plan_id" attrs="{'invisible': [('sale_procurement_step', '!=', 'two_steps')]}" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+
+    <record model="ir.actions.act_window" id="action_sale_order_procurement">
+        <field name="name">Procurement Sale Order</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('proc_plan_id', 'in', active_ids)]</field>
+    </record>
+
+    </data>
+</odoo>

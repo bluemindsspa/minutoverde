@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="app_res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">Sale Confirm to Procurement Plan First</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='delivery']" position="before">
+                <div class="col-12 col-lg-6 o_setting_box" id="sales_settings_default_sale_procurement_step">
+                    <div class="o_setting_left_pane"/>
+                    <div class="o_setting_right_pane">
+                        <label for="default_sale_procurement_step"/>
+                        <div class="text-muted">
+                            Set 2 steps to use Procurement Plan to get material supply for the sale order.
+                            Set 1 step to use normal direct Procurement.
+                            You can set for each Sale Order.
+                        </div>
+                        <div class="content-group">
+                            <div class="mt16">
+                                <field name="default_sale_procurement_step" class="o_light_label"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
