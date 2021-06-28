@@ -68,3 +68,11 @@ class PurchaseOrderChecklist(models.Model):
     task_eta = fields.Date('ETA tarea')
     order_id = fields.Many2one('purchase.order', string='Order Reference', index=True, required=True, ondelete='cascade')
 
+
+class PurchaseOrderLine(models.Model):
+    _inherit = 'purchase.order.line'
+
+    name_order = fields.Char(related='order_id.name', string='Order Name', readonly=True)
+    user_id = fields.Many2one(related='order_id.user_id', string='Purchase Representative', readonly=True)
+    invoice_status = fields.Selection(related='order_id.invoice_status', string='Billing Status', readonly=True)
+    origin = fields.Char(related='order_id.origin', string='Source Document', readonly=True)
