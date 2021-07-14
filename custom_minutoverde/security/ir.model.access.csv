@@ -5,3 +5,6 @@ access_purchase_order_mn,purchase.order.mn,model_purchase_order_mn,,1,1,1,1
 access_purchase_order_arrivalport,purchase.order.arrivalport,model_purchase_order_arrivalport,,1,1,1,1
 access_purchase_order_plannedwh,purchase.order.plannedwh,model_purchase_order_plannedwh,,1,1,1,1
 access_purchase_order_warehouse,purchase.order.warehouse,model_purchase_order_warehouse,,1,1,1,1
+access_product_family,product.family,model_product_family,,1,1,1,1
+access_res_chanel,res.chanel,model_res_chanel,,1,1,1,1
+access_res_group,res.group,model_res_group,,1,1,1,1

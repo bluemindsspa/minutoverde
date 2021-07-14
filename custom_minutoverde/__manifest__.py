@@ -38,6 +38,8 @@ En esta lengüeta se crea un line de 3 columnas:
         'security/ir.model.access.csv',
         'data/purchase_data.xml',
         'views/purchase_view.xml',
+        'views/product_template_view.xml',
+        'views/res_partner_view.xml',
     ],
 
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="view_partner_form_inherit">
+        <field name="name">res.partner.form.view.inherit</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="chanel_id"/>
+                <field name="description"/>
+                <field name="group_id"/>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='contact_addresses']/field[@name='child_ids']/form[1]/sheet[1]/group[1]/group/field[@name='mobile']" position="after">
+                <field name="reference"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+
