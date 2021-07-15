@@ -9,3 +9,5 @@ access_product_family,product.family,model_product_family,,1,1,1,1
 access_res_chanel,res.chanel,model_res_chanel,,1,1,1,1
 access_res_group,res.group,model_res_group,,1,1,1,1
 access_res_description,res.description,model_res_description,,1,1,1,1
+access_product_fam,product.fam,model_product_fam,,1,1,1,1
+access_product_categoria_fam,product.categoria.fam,model_product_categoria_fam,,1,1,1,1
