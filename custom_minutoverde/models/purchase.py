@@ -15,7 +15,13 @@ class PurchaseOrder(models.Model):
     arrival_port_id = fields.Many2one('purchase.order.arrivalport', string='Puerto de Arribo')
     planned_wh_id = fields.Many2one('purchase.order.plannedwh', string='Bodega Planificada')
     warehouse_id = fields.Many2one('purchase.order.warehouse', string='Bodega')
+    estimated_date = fields.Date(string='Fecha Estimada')
 
+class PurchaseOrderLine(models.Model):
+    _inherit = 'purchase.order.line'
+
+    contenedor_name = fields.Char('N° DE CONT')
+    contrato_name = fields.Char('Contrato')
 
 class PurchaseOrderCia(models.Model):
     _name = 'purchase.order.cia'
