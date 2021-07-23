@@ -65,17 +65,10 @@
                                 <input type="text"
                                 t-att-data-date_index="forecast_index"
                                 t-attf-class="form-control text-right
-                                    o_mrp_mps_input_replenish_qty
+                                    o_mrp_mps_input_agricultural_production_qty
                                     {{forecast.state == 'launched' and 'alert-dark' or
                                     forecast.state == 'to_relaunch' and 'alert-warning' or
-                                    forecast.state == 'to_correct' and 'alert-danger' or
-                                    forecast.to_replenish and 'alert-success' or
-                                    forecast.replenish_qty_updated and 'alert-info' or ''
-                                  }} {{
-                                    forecast.to_replenish and 'o_mrp_mps_to_replenish' or ''
-                                  }} {{
-                                    forecast.forced_replenish and 'o_mrp_mps_forced_replenish' or ''
-                                  }}"
+                                    forecast.state == 'to_correct' and 'alert-danger'"
                                 t-att-value="formatFloat(forecast.agricultural_production_qty, false, {'digits': [false, productionSchedule.precision_digits]})"/>
                             </div>
                         </th>
@@ -127,17 +120,10 @@
                                 <input type="text"
                                 t-att-data-date_index="forecast_index"
                                 t-attf-class="form-control text-right
-                                    o_mrp_mps_input_replenish_qty
+                                    o_mrp_mps_input_purchases_qty
                                     {{forecast.state == 'launched' and 'alert-dark' or
                                     forecast.state == 'to_relaunch' and 'alert-warning' or
-                                    forecast.state == 'to_correct' and 'alert-danger' or
-                                    forecast.to_replenish and 'alert-success' or
-                                    forecast.replenish_qty_updated and 'alert-info' or ''
-                                  }} {{
-                                    forecast.to_replenish and 'o_mrp_mps_to_replenish' or ''
-                                  }} {{
-                                    forecast.forced_replenish and 'o_mrp_mps_forced_replenish' or ''
-                                  }}"
+                                    forecast.state == 'to_correct' and 'alert-danger'"
                                 t-att-value="formatFloat(forecast.purchases_qty, false, {'digits': [false, productionSchedule.precision_digits]})"/>
                             </div>
                         </th>
