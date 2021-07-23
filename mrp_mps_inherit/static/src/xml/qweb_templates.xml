@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+    <t t-inherit="mrp_mps.mrp_mps_control_panel_option_buttons" t-inherit-mode="extension">
+
+        <xpath expr="//div[hasclass('dropdown-menu')]" position="inside">
+            <a role="menuitem" class="dropdown-item o_mps_option_mps_columns">
+                <label class="checkbox-inline">
+                    <input t-if="groups.mrp_mps_show_available_agricultural_production" class="o_mps_mps_show_line" type="checkbox" data-value="mrp_mps_show_available_agricultural_production" checked="true">Producción Agrícola</input>
+                    <input t-else="" class="o_mps_mps_show_line" type="checkbox" data-value="mrp_mps_show_available_agricultural_production">Producción Agrícola</input>
+                </label>
+            </a>
+            <a role="menuitem" class="dropdown-item o_mps_option_mps_columns">
+                <label class="checkbox-inline">
+                    <input t-if="groups.mrp_mps_show_available_purchases" class="o_mps_mps_show_line" type="checkbox" data-value="mrp_mps_show_available_purchases" checked="true">Compras</input>
+                    <input t-else="" class="o_mps_mps_show_line" type="checkbox" data-value="mrp_mps_show_available_purchases">Compras</input>
+                </label>
+            </a>
+        </xpath>
+    </t>
+    <t t-inherit="mrp_mps.mrp_mps_production_schedule" t-inherit-mode="extension">
+        <xpath expr="//tr[@name='demand_forecast']" position="before">
+            <tr name="agricultural_production" t-attf-class="{{! (groups.mrp_mps_show_agricultural_production or groups.mrp_mps_show_available_agricultural_production) and 'o_hidden' or ''}}">
+                    <th scope="row">
+                        + <span t-attf-class="{{! groups.mrp_mps_show_actual_replenishment and 'o_hidden' or ''}}" data-toggle="tooltip" data-placement="bottom" title="The quantity being replenished, based on the Requests for Quotation and the Manufacturing Orders.">Actual</span>
+                        <span t-attf-class="{{! (groups.mrp_mps_show_actual_replenishment and groups.mrp_mps_show_to_replenish) and 'o_hidden' or ''}}">/</span>
+                        <span t-attf-class="{{! groups.mrp_mps_show_to_replenish and 'o_hidden' or ''}}" data-toggle="tooltip" data-placement="bottom" title="The quantity to replenish through Purchase Orders or Manufacturing Orders.">Producción Agrícola</span>
+                        <button type="button" title="Replenish" class="o_hidden"> <!-- t-attf-class="{{! groups.mrp_mps_show_to_replenish and 'o_hidden' or 'btn btn-secondary o_no_padding o_mrp_mps_procurement'}}" -->
+                            Replenish
+                        </button>
+                    </th>
+                    <th class="text-right">
+                        <button type="button" class="o_hidden"> <!-- t-attf-class="{{! groups.mrp_mps_show_to_replenish and 'o_hidden' or 'btn btn-link o_no_padding o_mrp_mps_edit'}}" -->
+                            <t t-esc="productionSchedule.min_to_replenish_qty"/> &#8804;&amp;hellip;&#8804; <t t-esc="productionSchedule.max_to_replenish_qty"/>
+                        </button>
+                    </th>
+                    <t t-foreach="productionSchedule.forecast_ids" t-as="forecast">
+                        <th t-attf-class="o_forecast_stock text-right pr-4 {{
+                            forecast.to_replenish and 'o_mrp_mps_to_replenish' or ''
+                          }} {{
+                            forecast.forced_replenish and 'o_mrp_mps_forced_replenish' or ''
+                          }}">
+                            <a href="#"
+                            name="actual_replenishment"
+                            data-action="action_open_actual_replenishment_details"
+                            t-att-data-date_index="forecast_index"
+                            t-att-data-date_start="forecast.date_start"
+                            t-att-data-date_stop="forecast.date_stop"
+                            t-attf-class="o_mrp_mps_open_details {{
+                                ! groups.mrp_mps_show_actual_replenishment and 'o_hidden'
+                              }} {{
+                                forecast.to_replenish and 'o_mrp_mps_to_replenish' or ''
+                              }} {{
+                                forecast.forced_replenish and 'o_mrp_mps_forced_replenish' or ''
+                              }}">
+                                <t t-esc="formatFloat(forecast.agricultural_production_qty, false, {'digits': [false, productionSchedule.precision_digits]})"/>
+                            </a>
+                            <span t-attf-class="{{! (groups.mrp_mps_show_actual_replenishment and groups.mrp_mps_show_to_replenish) and 'o_hidden' or ''}}">/</span>
+                            <div t-attf-class="input-group {{! groups.mrp_mps_show_to_replenish and 'o_hidden' or  groups.mrp_mps_show_actual_replenishment and 'o_mps_inline' or ''}}">
+                                <button type="button"
+                                    t-if="forecast.replenish_qty_updated"
+                                    t-att-data-date_index="forecast_index"
+                                    class="btn btn-link input-group-addon
+                                    o_mrp_mps_automatic_mode fa fa-times
+                                    o_no_padding"/>
+                                <input type="text"
+                                t-att-data-date_index="forecast_index"
+                                t-attf-class="form-control text-right
+                                    o_mrp_mps_input_replenish_qty
+                                    {{forecast.state == 'launched' and 'alert-dark' or
+                                    forecast.state == 'to_relaunch' and 'alert-warning' or
+                                    forecast.state == 'to_correct' and 'alert-danger' or
+                                    forecast.to_replenish and 'alert-success' or
+                                    forecast.replenish_qty_updated and 'alert-info' or ''
+                                  }} {{
+                                    forecast.to_replenish and 'o_mrp_mps_to_replenish' or ''
+                                  }} {{
+                                    forecast.forced_replenish and 'o_mrp_mps_forced_replenish' or ''
+                                  }}"
+                                t-att-value="formatFloat(forecast.agricultural_production_qty, false, {'digits': [false, productionSchedule.precision_digits]})"/>
+                            </div>
+                        </th>
+                    </t>
+                </tr>
+            <tr name="purchases" t-attf-class="{{! (groups.mrp_mps_show_purchases or groups.mrp_mps_show_available_purchases) and 'o_hidden' or ''}}">
+                    <th scope="row">
+                        + <span t-attf-class="{{! groups.mrp_mps_show_actual_replenishment and 'o_hidden' or ''}}" data-toggle="tooltip" data-placement="bottom" title="The quantity being replenished, based on the Requests for Quotation and the Manufacturing Orders.">Actual</span> <!-- t-attf-class="{{! groups.mrp_mps_show_available_purchases and 'o_hidden' or ''}}" -->
+                        <span t-attf-class="{{! (groups.mrp_mps_show_actual_replenishment and groups.mrp_mps_show_to_replenish) and 'o_hidden' or ''}}">/</span>
+                        <span t-attf-class="{{! groups.mrp_mps_show_to_replenish and 'o_hidden' or ''}}" data-toggle="tooltip" data-placement="bottom" title="The quantity to replenish through Purchase Orders or Manufacturing Orders.">Compras</span>
+                        <button type="button" title="Replenish" class="o_hidden"> <!--t-attf-class="{{! groups.mrp_mps_show_purchases and 'o_hidden' or 'btn btn-secondary o_no_padding o_mrp_mps_procurement'}}"-->
+                            Replenish
+                        </button>
+                    </th>
+                    <th class="text-right">
+                        <button type="button" class="o_hidden"> <!-- t-attf-class="{{! groups.mrp_mps_show_purchases and 'o_hidden' or 'btn btn-link o_no_padding o_mrp_mps_edit'}}" -->
+                            <t t-esc="productionSchedule.min_to_replenish_qty"/> &#8804;&amp;hellip;&#8804; <t t-esc="productionSchedule.max_to_replenish_qty"/>
+                        </button>
+                    </th>
+                    <t t-foreach="productionSchedule.forecast_ids" t-as="forecast">
+                        <th t-attf-class="o_forecast_stock text-right pr-4 {{
+                            forecast.to_replenish and 'o_mrp_mps_to_replenish' or ''
+                          }} {{
+                            forecast.forced_replenish and 'o_mrp_mps_forced_replenish' or ''
+                          }}">
+                            <a href="#"
+                            name="actual_replenishment"
+                            data-action="action_open_actual_replenishment_details"
+                            t-att-data-date_index="forecast_index"
+                            t-att-data-date_start="forecast.date_start"
+                            t-att-data-date_stop="forecast.date_stop"
+                            t-attf-class="o_mrp_mps_open_details {{
+                                ! groups.mrp_mps_show_actual_replenishment and 'o_hidden'
+                              }} {{
+                                forecast.to_replenish and 'o_mrp_mps_to_replenish' or ''
+                              }} {{
+                                forecast.forced_replenish and 'o_mrp_mps_forced_replenish' or ''
+                              }}">
+                                <t t-esc="formatFloat(forecast.incoming_qty, false, {'digits': [false, productionSchedule.precision_digits]})"/>
+                            </a>
+                            <span t-attf-class="{{! (groups.mrp_mps_show_actual_replenishment and groups.mrp_mps_show_purchases) and 'o_hidden' or ''}}">/</span>
+                            <div t-attf-class="input-group {{! groups.mrp_mps_show_to_replenish and 'o_hidden' or  groups.mrp_mps_show_actual_replenishment and 'o_mps_inline' or ''}}">
+                                <button type="button"
+                                    t-if="forecast.replenish_qty_updated"
+                                    t-att-data-date_index="forecast_index"
+                                    class="btn btn-link input-group-addon
+                                    o_mrp_mps_automatic_mode fa fa-times
+                                    o_no_padding"/>
+                                <input type="text"
+                                t-att-data-date_index="forecast_index"
+                                t-attf-class="form-control text-right
+                                    o_mrp_mps_input_replenish_qty
+                                    {{forecast.state == 'launched' and 'alert-dark' or
+                                    forecast.state == 'to_relaunch' and 'alert-warning' or
+                                    forecast.state == 'to_correct' and 'alert-danger' or
+                                    forecast.to_replenish and 'alert-success' or
+                                    forecast.replenish_qty_updated and 'alert-info' or ''
+                                  }} {{
+                                    forecast.to_replenish and 'o_mrp_mps_to_replenish' or ''
+                                  }} {{
+                                    forecast.forced_replenish and 'o_mrp_mps_forced_replenish' or ''
+                                  }}"
+                                t-att-value="formatFloat(forecast.purchases_qty, false, {'digits': [false, productionSchedule.precision_digits]})"/>
+                            </div>
+                        </th>
+                    </t>
+                </tr>
+        </xpath>
+    </t>
+
+</templates>
