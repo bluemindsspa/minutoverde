@@ -16,6 +16,19 @@ class PurchaseOrder(models.Model):
     planned_wh_id = fields.Many2one('purchase.order.plannedwh', string='Bodega Planificada')
     warehouse_id = fields.Many2one('purchase.order.warehouse', string='Bodega')
     estimated_date = fields.Date(string='Fecha Estimada')
+    contenedor_count = fields.Integer(string="Cant. Contenedores", store=True, compute='_compute_contenedor')
+
+    @api.depends('order_line', 'order_line.contenedor_name')
+    def _compute_contenedor(self):
+        for record in self:
+            qty = 0
+            if record.order_line:
+                for line in record.order_line:
+                    if line.contenedor_name:
+                        qty += 1
+            record.contenedor_count = qty
+
+
 
 class PurchaseOrderLine(models.Model):
     _inherit = 'purchase.order.line'
