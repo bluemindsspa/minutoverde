@@ -22,10 +22,10 @@ class PurchaseOrder(models.Model):
     def _compute_contenedor(self):
         for record in self:
             qty = 0
-            if record.order_line:
-                for line in record.order_line:
-                    if line.contenedor_name:
-                        qty += 1
+            contenedores = record.order_line.mapped('cont_nbr')
+            for contenedor in contenedores:
+                if contenedor != '':
+                    qty += 1
             record.contenedor_count = qty
 
 
