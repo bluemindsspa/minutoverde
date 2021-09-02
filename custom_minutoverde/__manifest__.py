@@ -31,15 +31,19 @@ En esta lengüeta se crea un line de 3 columnas:
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'purchase'],
+    'depends': ['base', 'purchase', 'sale'],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
         'data/purchase_data.xml',
         'views/purchase_view.xml',
+        'views/sale_order_views.xml',
         'views/product_template_view.xml',
         'views/res_partner_view.xml',
     ],
 
+    'qweb': [
+        'static/src/xml/purchase_dashboard.xml',
+    ],
 }
