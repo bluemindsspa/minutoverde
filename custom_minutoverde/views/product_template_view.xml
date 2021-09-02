@@ -7,12 +7,15 @@
             <field name="inherit_id" ref="product.product_template_only_form_view"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='barcode']" position="after">
-                <field name="family_id" placeholder="Agrupación Familia"/>
-                <field name="fam_id" placeholder="Familia"/>
-                <field name="sub_fam_id" placeholder="Sub Familia"/>
-                <field name="categ_fam_id" placeholder="Categoría"/>
-                <field name="sub_categ_fam_id" placeholder="Sub Categoría"/>
-            </xpath>  
+                    <field name="family_id" placeholder="Agrupación Familia"/>
+                    <field name="fam_id" placeholder="Familia"/>
+                    <field name="sub_fam_id" placeholder="Sub Familia"/>
+                    <field name="categ_fam_id" placeholder="Categoría"/>
+                    <field name="sub_categ_fam_id" placeholder="Sub Categoría"/>
+                </xpath>
+                <xpath expr="//field[@name='uom_id']" position="before">
+                    <field name="box_per_container"/>
+                </xpath>
             </field>
         </record>
     </data>

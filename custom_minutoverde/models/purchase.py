@@ -118,6 +118,16 @@ class PurchaseOrderLine(models.Model):
 
     contenedor_name = fields.Char('N° DE CONT')
     contrato_name = fields.Char('Contrato')
+    box_per_container = fields.Float(string="Cont. aprox", compute='_compute_container_approximate')
+
+    @api.depends('product_id', 'product_qty')
+    def _compute_container_approximate(self):
+        for line in self:
+            qty = 0.0
+            if line.product_id:
+                qty = line.product_qty / line.product_id.box_per_container if line.product_id.box_per_container else 0.0
+            line.box_per_container = qty
+
 
 class PurchaseOrderCia(models.Model):
     _name = 'purchase.order.cia'

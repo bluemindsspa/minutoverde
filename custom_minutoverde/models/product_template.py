@@ -11,7 +11,8 @@ class ProductTemplate(models.Model):
     sub_fam_id = fields.Many2one('product.fam', string="Sub Familia")
     categ_fam_id = fields.Many2one('product.categoria.fam', string="Categoría")
     sub_categ_fam_id = fields.Many2one('product.categoria.fam', string="Sub Categoría")
-    
+    box_per_container = fields.Float(string="Cajas por contenedor")
+
 class ProductFamily(models.Model):
     _name = 'product.family'
     _description = 'Agrupación Familiar'

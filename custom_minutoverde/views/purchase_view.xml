@@ -14,10 +14,11 @@
                     <field name="estimated_date"/>
                     <field name="contenedor_count" invisible="1"/>
                 </field>
-                  <xpath expr="//field[@name='order_line']/tree//field[@name='product_qty']" position="after">
-                <field name="contrato_name" />
-                <field name="contenedor_name" />
-             </xpath>
+                <xpath expr="//field[@name='order_line']/tree//field[@name='product_qty']" position="after">
+                    <field name="contrato_name"/>
+                    <field name="box_per_container"/>
+                    <field name="contenedor_name"/>
+                </xpath>
                 <xpath expr="//notebook" position="inside">
                     <page name="import" string="Importación" attrs="{'invisible': [('imports', '=', False)]}">
                         <group>
