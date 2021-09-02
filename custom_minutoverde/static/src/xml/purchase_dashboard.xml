@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <templates xml:space="preserve">
+        <t t-name="purchase.PurchaseDashboard" t-inherit="purchase.PurchaseDashboard" t-inherit-mode="extension">
+            <xpath expr="//div[hasclass('col-sm-5')]/table/thead/tr" position="inside">
+                <td class="o_main o_dashboard_action" title="Contenedores" name="purchase.purchase_action_dashboard">
+                    <a href="#"><t t-esc="values['all_container']"/><br/>Contenedores</a>
+                </td>
+            </xpath>
+
+            <xpath expr="//div[hasclass('col-sm-5')]/table/tbody/tr" position="inside">
+                <td class="o_main o_dashboard_action" title="My Late RFQs" name="purchase.purchase_action_dashboard">
+                    <a href="#"><t t-esc="values['my_container']"/></a>
+                </td>
+            </xpath>
+        </t>
+    </templates>
