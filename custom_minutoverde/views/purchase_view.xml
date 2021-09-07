@@ -55,7 +55,7 @@
             <field name="arch" type="xml">
 
                 <xpath expr="//field[@name='origin']" position="after">
-                    <field name="contenedor_count"/>
+                    <field name="contenedor_count" sum="Total"/>
                 </xpath>
 
             </field>
