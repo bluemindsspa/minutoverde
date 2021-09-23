@@ -15,7 +15,7 @@ class SaleOrder(models.Model):
         ('alert', 'Alert'),
     ], string="Sale Alert", compute='_compute_alert', store=False)
 
-    @api.multi
+#    @api.multi
     @api.depends('validity_date', 'commitment_date')
     def _compute_alert(self):
         # quotation 报价期提醒，5天alert红，10天warning黄
