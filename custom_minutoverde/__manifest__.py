@@ -40,6 +40,7 @@ En esta lengüeta se crea un line de 3 columnas:
         'views/purchase_view.xml',
         'views/sale_order_views.xml',
         'views/product_template_view.xml',
+        'views/product_supplierinfo_view_2.xml',
         'views/res_partner_view.xml',
     ],
 
