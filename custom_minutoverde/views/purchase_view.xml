@@ -45,6 +45,11 @@
                         </field>
                     </page>
                 </xpath>
+                <xpath expr="//form/sheet/group/group[2]" position="inside">
+                    <field name="sanit_resol"/>
+                    <field name="sanit_resol_file" nolabel="1"/>
+                    <field name="has_sanit_resol" invisible="1"/>
+                </xpath>
             </field>
         </record>
 
@@ -53,11 +58,12 @@
             <field name="model">purchase.order</field>
             <field name="inherit_id" ref="purchase.purchase_order_kpis_tree"/>
             <field name="arch" type="xml">
-
+                <xpath expr="//field[@name='origin']" position="before">
+                    <field name="has_sanit_resol"/>
+                </xpath>
                 <xpath expr="//field[@name='origin']" position="after">
                     <field name="contenedor_count" sum="Total"/>
                 </xpath>
-
             </field>
         </record>
 
