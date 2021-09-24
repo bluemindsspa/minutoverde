@@ -17,7 +17,7 @@ A;ade dos lineas nuevas en template
 2. Compras
 """,
     'data': [
-        # 'views/qweb_templates.xml',
+        'views/assets.xml',
     ],
     'demo': [
         # 'data/mps_demo.xml',
