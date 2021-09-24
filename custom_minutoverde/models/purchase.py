@@ -18,6 +18,17 @@ class PurchaseOrder(models.Model):
     warehouse_id = fields.Many2one('purchase.order.warehouse', string='Bodega')
     estimated_date = fields.Date(string='Fecha Estimada')
     contenedor_count = fields.Integer(string="Cant. Contenedores", store=True, compute='_compute_contenedor')
+    sanit_resol = fields.Date(string='Resolución sanitaria')
+    sanit_resol_file = fields.Binary(string='Archivo Res. Sanit.', help='Archivo resolución sanitaria')
+    has_sanit_resol = fields.Boolean(string='Res. Sanit.')
+
+    @api.onchange('sanit_resol_file')
+    def get_sanit_resol(self):
+        # for record in self:
+        if self.sanit_resol_file:
+            self.has_sanit_resol = True
+        else:
+            self.has_sanit_resol = False
 
     @api.model
     def retrieve_dashboard(self):
