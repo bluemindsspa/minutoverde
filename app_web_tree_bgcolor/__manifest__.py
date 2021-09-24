@@ -46,13 +46,13 @@
     'depends': [
         'app_common',
         # please uncommented the follow if you need to use in sale or purchase, it's a sample in sale order and purchase.
-        # 'sale_management',
-        # 'purchase',
+        'sale_management',
+        'purchase',
     ],
     "data": [
         'views/templates.xml',
         # please uncommented the follow if you need to use in sale or purchase, it's a sample in sale order and purchase.
-        # 'views/sale_order_views.xml',
-        # 'views/purchase_order_views.xml',
+        'views/sale_order_views.xml',
+        'views/purchase_order_views.xml',
     ],
 }
