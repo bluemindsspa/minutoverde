@@ -36,6 +36,7 @@
                         </group>
                     </page>
                     <page name="checklist" string="Checklist">
+                        <button name="load_tasks_lines" string="Cargar Tareas" type="object" class="oe_highlight"/>
                         <field name="checklist_line" widget="section_and_note_one2many" mode="tree,kanban">
                             <tree string="checklist_line" editable="bottom">
                                 <field name="name"/>

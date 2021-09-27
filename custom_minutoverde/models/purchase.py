@@ -122,6 +122,27 @@ class PurchaseOrder(models.Model):
                         qty += 1
             record.contenedor_count = qty
 
+    def load_tasks_lines(self):
+        res = []
+        tasks = [
+            'FACTURA',
+            'LISTA DE EMPAQUE',
+            'CERTIFICADO DE ORIGEN',
+            'SEGURO',
+            'CERTIFICADO DE ANALISIS',
+            'CERTIFICADO FITOSANITARIO',
+            'ISTA'
+        ]
+        if self.checklist_line:
+            self.checklist_line.unlink()
+        for t in tasks:
+            data = {
+                'name': t,
+                'order_id': self.id
+            }
+            res.append(data)
+        print(res)
+        self.checklist_line.create(res)
 
 
 class PurchaseOrderLine(models.Model):
@@ -191,3 +212,22 @@ class PurchaseOrderChecklist(models.Model):
     task_eta = fields.Date('ETA tarea')
     order_id = fields.Many2one('purchase.order', string='Order Reference', index=True, required=True, ondelete='cascade')
 
+    # def load_tasks(self):
+    #     res = []
+    #     tasks = [
+    #         'FACTURA',
+    #         'LISTA DE EMPAQUE',
+    #         'CERTIFICADO DE ORIGEN',
+    #         'SEGURO',
+    #         'CERTIFICADO DE ANALISIS',
+    #         'CERTIFICADO FITOSANITARIO',
+    #         'ISTA'
+    #     ]
+    #     for t in tasks:
+    #         data = {
+    #             'name': t,
+    #             'order_id': self.order_id
+    #         }
+    #         res.append(data)
+    #     print(res)
+    #     self.create(res)
