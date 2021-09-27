@@ -14,6 +14,11 @@ from collections import OrderedDict
 class MrpProductionSchedule(models.Model):
     _inherit = 'mrp.production.schedule'
 
+    def set_forecast_qty(self, date_index, quantity):
+        res = super(MrpProductionSchedule, self).set_forecast_qty(date_index, quantity)
+        self.calculate_security_stock()
+        return res
+
     def set_agricultural_qty(self, date_index, quantity):
         """ Save the forecast quantity:
 
@@ -38,6 +43,7 @@ class MrpProductionSchedule(models.Model):
                 'replenish_qty': 0,
                 'production_schedule_id': self.id
             })
+        self.calculate_security_stock()
         return True
 
     def set_purchase_qty(self, date_index, quantity):
@@ -64,6 +70,7 @@ class MrpProductionSchedule(models.Model):
                 'replenish_qty': 0,
                 'production_schedule_id': self.id
             })
+        self.calculate_security_stock()
         return True
 
     @api.model
@@ -238,6 +245,15 @@ class MrpProductionSchedule(models.Model):
                 production_schedule_state['has_indirect_demand'] = has_indirect_demand
         return [p for p in production_schedule_states if p['id'] in self.ids]
 
+
+    def calculate_security_stock(self):
+        date_index = 0
+        forecasted = 0
+        for index in range(date_index, self.product_id.week_analysis):
+            date_start, date_stop = self.company_id._get_date_range()[index]
+            forecast_ids = self.forecast_ids.filtered(lambda f: f.date >= date_start and f.date <= date_stop)
+            forecasted += forecast_ids[0].forecast_qty
+        self.forecast_target_qty = forecasted
 
 class MrpProductForecast(models.Model):
     _inherit = 'mrp.product.forecast'

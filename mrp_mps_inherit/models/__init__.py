@@ -2,3 +2,4 @@
 
 from . import res_company
 from . import mrp_mps
+from . import product

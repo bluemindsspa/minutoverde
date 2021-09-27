@@ -18,6 +18,7 @@ A;ade dos lineas nuevas en template
 """,
     'data': [
         'views/assets.xml',
+        'views/product_views.xml'
     ],
     'demo': [
         # 'data/mps_demo.xml',
