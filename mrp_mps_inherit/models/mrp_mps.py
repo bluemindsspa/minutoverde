@@ -247,13 +247,16 @@ class MrpProductionSchedule(models.Model):
 
 
     def calculate_security_stock(self):
-        date_index = 0
-        forecasted = 0
-        for index in range(date_index, self.product_id.week_analysis):
-            date_start, date_stop = self.company_id._get_date_range()[index]
-            forecast_ids = self.forecast_ids.filtered(lambda f: f.date >= date_start and f.date <= date_stop)
-            forecasted += forecast_ids[0].forecast_qty
-        self.forecast_target_qty = forecasted
+        perdiod_manufacturing = self.env.company.manufacturing_period
+        if perdiod_manufacturing == 'week':
+            date_index = 0
+            forecasted = 0
+            for index in range(date_index, self.product_id.week_analysis):
+                date_start, date_stop = self.company_id._get_date_range()[index]
+                forecast_ids = self.forecast_ids.filtered(lambda f: f.date >= date_start and f.date <= date_stop)
+                if forecast_ids:
+                    forecasted += forecast_ids[0].forecast_qty
+            self.forecast_target_qty = forecasted
 
 class MrpProductForecast(models.Model):
     _inherit = 'mrp.product.forecast'
