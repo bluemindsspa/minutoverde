@@ -108,3 +108,16 @@ class PurchaseOrderLine(models.Model):
                 },
             }
         return {}
+
+
+class PurchaseOrder(models.Model):
+    _inherit = "purchase.order"
+
+    packaging_qty_line = fields.Float(string="Line package quantity", digits="Product Unit of Measure", store=True,
+                                      compute='_compute_contenedor')
+
+    @api.depends('order_line', 'order_line.product_packaging_qty')
+    def _compute_contenedor(self):
+        for record in self:
+            qty = sum(l.product_packaging_qty for l in record.order_line)
+            record.packaging_qty_line = qty

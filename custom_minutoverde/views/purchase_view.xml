@@ -12,12 +12,12 @@
                 </field>
                 <field name="partner_ref" position="after">
                     <field name="estimated_date"/>
-                    <field name="contenedor_count" invisible="1"/>
+<!--                    <field name="contenedor_count" invisible="1"/>-->
                 </field>
                 <xpath expr="//field[@name='order_line']/tree//field[@name='product_qty']" position="after">
                     <field name="contrato_name"/>
-                    <field name="box_per_container"/>
-                    <field name="contenedor_name"/>
+<!--                    <field name="box_per_container"/>-->
+<!--                    <field name="contenedor_name"/>-->
                 </xpath>
                 <xpath expr="//notebook" position="inside">
                     <page name="import" string="Importación" attrs="{'invisible': [('imports', '=', False)]}">
@@ -62,13 +62,13 @@
                 <xpath expr="//field[@name='origin']" position="before">
                     <field name="has_sanit_resol"/>
                 </xpath>
-                <xpath expr="//field[@name='origin']" position="after">
+                <!--<xpath expr="//field[@name='origin']" position="after">
                     <field name="contenedor_count" sum="Total"/>
-                </xpath>
+                </xpath>-->
             </field>
         </record>
 
-        <record id="purchase_order_view_tree_inh" model="ir.ui.view">
+<!--        <record id="purchase_order_view_tree_inh" model="ir.ui.view">
             <field name="name">purchase.order.view.tree.inh</field>
             <field name="model">purchase.order</field>
             <field name="inherit_id" ref="purchase.purchase_order_view_tree"/>
@@ -79,6 +79,6 @@
                 </xpath>
 
             </field>
-        </record>
+        </record>-->
     </data>
 </odoo>

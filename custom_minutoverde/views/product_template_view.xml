@@ -13,9 +13,9 @@
                     <field name="categ_fam_id" placeholder="Categoría"/>
                     <field name="sub_categ_fam_id" placeholder="Sub Categoría"/>
                 </xpath>
-                <xpath expr="//field[@name='uom_id']" position="before">
+                <!--<xpath expr="//field[@name='uom_id']" position="before">
                     <field name="box_per_container"/>
-                </xpath>
+                </xpath>-->
             </field>
         </record>
     </data>
