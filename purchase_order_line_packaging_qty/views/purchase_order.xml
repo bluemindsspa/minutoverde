@@ -44,7 +44,7 @@
                 />
             </xpath>
             <field name="partner_id" position="before">
-                <field name="packaging_qty_line"/>
+                <field name="packaging_qty_line" invisible="1"/>
             </field>
         </field>
     </record>

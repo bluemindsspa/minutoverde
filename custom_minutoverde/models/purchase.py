@@ -21,6 +21,7 @@ class PurchaseOrder(models.Model):
     sanit_resol = fields.Date(string='Resolución sanitaria')
     sanit_resol_file = fields.Binary(string='Archivo Res. Sanit.', help='Archivo resolución sanitaria')
     has_sanit_resol = fields.Boolean(string='Res. Sanit.')
+    pending_docs = fields.Boolean(string='Documentos pendientes', default=False, store=True, compute='_validate_docs')
 
     @api.onchange('sanit_resol_file')
     def get_sanit_resol(self):
@@ -143,6 +144,13 @@ class PurchaseOrder(models.Model):
             res.append(data)
         print(res)
         self.checklist_line.create(res)
+
+    @api.depends('checklist_line', 'checklist_line.state')
+    def _validate_docs(self):
+        for record in self:
+            docs = len(record.checklist_line.filtered(lambda l: l.state != 'TER'))
+            if docs > 0:
+                record.pending_docs = True
 
 
 class PurchaseOrderLine(models.Model):
