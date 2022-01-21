@@ -11,3 +11,4 @@ access_res_group,res.group,model_res_group,,1,1,1,1
 access_res_description,res.description,model_res_description,,1,1,1,1
 access_product_fam,product.fam,model_product_fam,,1,1,1,1
 access_product_categoria_fam,product.categoria.fam,model_product_categoria_fam,,1,1,1,1
+access_purchase_order_plannedport,purchase.order.plannedport,model_purchase_order_plannedport,,1,1,1,1
