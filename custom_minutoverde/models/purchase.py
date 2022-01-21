@@ -22,6 +22,7 @@ class PurchaseOrder(models.Model):
     sanit_resol_file = fields.Binary(string='Archivo Res. Sanit.', help='Archivo resolución sanitaria')
     has_sanit_resol = fields.Boolean(string='Res. Sanit.')
     pending_docs = fields.Boolean(string='Documentos pendientes', default=False, store=True, compute='_validate_docs')
+    plannedport_id = fields.Many2one('purchase.order.plannedport', string='Puerto Planificado')
 
     @api.onchange('sanit_resol_file')
     def get_sanit_resol(self):
@@ -195,6 +196,13 @@ class PurchaseOrderPlannedWh(models.Model):
     _description = 'Bodega Planificada'
 
     name = fields.Text(string='Bodega Planificada', required=True)
+
+
+class PurchaseOrderPlannedPort(models.Model):
+    _name = 'purchase.order.plannedport'
+    _description = 'Puerto Planificado'
+
+    name = fields.Text(string='Puerto Planificado', required=True)
 
 
 class PurchaseOrderWarehouse(models.Model):

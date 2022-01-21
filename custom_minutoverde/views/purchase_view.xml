@@ -24,11 +24,12 @@
                         <group>
                             <group>
                                 <field name="awb_bl"/>
-                                <field name="cont_nbr"/>
+<!--                                <field name="cont_nbr"/>-->
                                 <field name="cia_id"/>
                                 <field name="mn_id"/>
                             </group>
                             <group>
+                                <field name="plannedport_id"/>
                                 <field name="arrival_port_id"/>
                                 <field name="planned_wh_id"/>
                                 <field name="warehouse_id"/>
